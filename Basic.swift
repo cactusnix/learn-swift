@@ -157,10 +157,80 @@ func lessThanNum(var1: Int, num: Int) -> Bool {
 print("test less than 100", hasLessThanNum(list: [3213, 53254, 333, 645], condition: lessThanNum))
 
 // 诡异的闭包 num 作为入参，返回值在 in 后面
-print([1,434,66].map({(num: Int) -> Int in
+print([1, 434, 66].map { (num: Int) -> Int in
     if num % 2 == 1 {
         return 0
     } else {
         return 1
     }
-}))
+})
+// 默认入参为每个数组值，直接返回 num * 3
+print([1, 3, 4, 4].map { num in num * 3 })
+
+// class
+class TestName {
+    let name1: String = "testNameOption"
+    var name: String
+    init(name: String) {
+        self.name = name
+    }
+
+    func printName() -> String {
+        return "A name \(name), \(name1)"
+    }
+}
+
+var testClass = TestName(name: "word")
+print(testClass.printName())
+
+// class subclass
+class SubClass: TestName {
+    override func printName() -> String {
+        return "A subname \(name)"
+    }
+}
+
+var subClass = SubClass(name: "subClass")
+print(subClass.printName())
+
+// 可选？？？
+let optionName: TestName? = TestName(name: "www")
+let result = optionName?.name1
+
+// 枚举类型
+enum Rank: Int {
+    case ace = 1
+    case one, two
+    case king, queen
+
+    func simpleDescription() -> String {
+        switch self {
+        case .ace:
+            print(self)
+            return "Ace"
+        default:
+            return String(self.rawValue)
+        }
+    }
+}
+
+let ace = Rank.ace
+// 每个枚举类型有自己的方法
+print("ace rawValue", ace.rawValue, ace.simpleDescription())
+
+// 协议 Protocols
+
+// Test defer block
+func testDefer() -> String {
+    var result = "first"
+    result = "first + 1"
+    print(result)
+    defer {
+        // 并不会修改result的值？？？
+        result = "second"
+        print(result)
+    }
+    return result
+}
+
+print(testDefer())
